@@ -8,3 +8,12 @@ export type Attributes = {
 };
 
 export type Class = "Barbarian" | "Wizard" | "Bard";
+
+export type Skills = {
+  [skill: string]: number;
+};
+
+export type Character = {
+  skills: Skills;
+  // Other character properties can be added here
+};
