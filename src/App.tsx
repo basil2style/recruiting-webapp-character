@@ -264,7 +264,7 @@ const CharacterSheet = () => {
           )}
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {/* Attributes Section */}
           <div className="p-4 bg-gray-800 rounded border border-gray-700">
             <h2 className="text-xl font-bold mb-4 text-center">Attributes</h2>
@@ -309,14 +309,31 @@ const CharacterSheet = () => {
                   <div 
                     key={classObj.name}
                     className={`p-1 text-center cursor-pointer ${
-                      meetsRequirements ? 'text-red-400' : 'text-gray-400'
-                    }`}
+                      !meetsRequirements ? 'text-red-400' : 'text-gray-400'
+                    } ${character.selectedClass === classObj.name ? 'bg-gray-700' : ''}`}
                     onClick={() => handleClassSelect(character.id, classObj.name)}
                   >
                     {classObj.name}
                   </div>
                 );
               })}
+            </div>
+          </div>
+          
+          {/* Class Requirements Section */}
+          <div className="p-4 bg-gray-800 rounded border border-gray-700">
+            <h2 className="text-xl font-bold mb-4 text-center">
+              {characters[0].selectedClass ? `${characters[0].selectedClass} Minimum Requirements` : 'Class Requirements'}
+            </h2>
+            <div className="space-y-2">
+              {characters[0].selectedClass && Object.entries(CLASS_LIST.find(c => c.name === characters[0].selectedClass)?.minimums || {}).map(([attribute, minimum]) => (
+                <div key={attribute} className="flex justify-between items-center">
+                  <span>{attribute}: {minimum}</span>
+                  <span className={characters[0].attributes[attribute] < minimum ? 'text-red-400' : ''}>
+                    Current: {characters[0].attributes[attribute]}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
           
